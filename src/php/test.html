@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-beta1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        .rotate {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            padding: 20px 0 20px 30px;
+        }
+        .rotate p{
+          animation: transition linear 0.5s 0.3s;
+        }
+        @keyframes transition{
+          from{
+            transform: translateX(-20%);
+          }to{
+            transform: translateX(0%);
+          }
+        }
+        
+    </style>
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <div class="mt-5 container">
+        <div class="rotate">
+          <p class="color-white transition d-flex align-items-center ">Hello my name is Dũng</p>
+        </div>
+    </div>
+    
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-beta1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+      </script>
+  </body>
+</html>
