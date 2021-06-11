@@ -1,8 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
 <?php 
     include 'db.php';
+    session_start();
 ?>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
@@ -312,7 +314,33 @@
                     </div>
                 </li>
                 <li class="nav-item focus_cart">
-                    <a class="nav-link" href="#"><label for="nav_input">GIỎ HÀNG <i class="fas fa-shopping-bag"></i></label></a>
+                    <a class="nav-link" href="#"><label for="nav_input">GIỎ HÀNG <i class="fas fa-shopping-bag"></i>
+
+                    <?php 
+                    if(!empty($_SESSION['cart'])){
+                        $pro = "SELECT * FROM `products` Where id_product in (" . implode(",", array_keys($_SESSION['cart'])) . ")";
+                        $products = $conn->query($pro);
+                        if($products ->num_rows > 0){
+                            $dem_cart = 0;
+                            while ($row_cart = $products ->fetch_assoc()){
+                                $dem_cart++;
+                            }
+                            echo '<span class="cart_dem">'.$dem_cart.'</span>';
+                        }
+                            if (isset($_POST['update_click1'])) {
+                                foreach ($_POST['quantity'] as $id => $quantity) {
+                                    if ($quantity == 0) {
+                                        unset($_SESSION['cart'][$id]);
+                                        header('Location: index.php');
+                                    } else {
+                                        $_SESSION['cart'][$id] = $quantity;
+                                    }
+                                }
+                            }
+                    }
+                    ?>
+                    
+                    </label></a>
                     <input type="checkbox" hidden class="nav_input" id="nav_input">
                     <label for="nav_input" name="1" class="over_lay"></label>
                     <div class="cart bg-light">
@@ -323,12 +351,48 @@
                             </div>
                         </div>
                         <div class="cart_body" style="height: 500px; overflow: auto; background-color: white;">
-                            <div class="cart_list mt-5">
-                                <p class="text-center mb-4">Hiện tại chưa có sản phẩm nào trong giỏ hàng</p>
-                                <label for="nav_input" style="position: relative;" class="btn d-block w-50 mx-auto btn-ellipse">TIẾP TỤC MUA HÀNG</label>
-                            </div>
+                            <?php 
+                                if (!empty($_SESSION['cart'])) {
+                                    $pro = "SELECT * FROM `products` Where id_product in (" . implode(",", array_keys($_SESSION['cart'])) . ")";
+                                    $products = $conn->query($pro);
+                                    echo '<div class="">
+                                    <div class="cart_list_123 p-4">';
+                                    if($products ->num_rows > 0){
+                                        while ($row_cart = $products ->fetch_assoc()){
+                                            echo '
+                                            <form method="post">
+                                            <div class="d-flex justify-content-between align-items-center px-5 pt-3 pb-3 border-bottom ">
+                                            <img src="../../src/php/admin/light-bootstrap-dashboard-master/examples/images/product/'.$row_cart['image'].'" width="100px" alt="">
+                                            <div class="price_cart">
+                                                <p class="cart_name">'.$row_cart['name_product'].'</p>
+                                                <div class="d-flex align-items-center">
+                                                    <input style="width:100px !important" value="'.$_SESSION['cart'][$row_cart['id_product']].'" name="quantity[' . $row_cart['id_product'] . ']"" type="number" class="form-control" name="">
+                                                    <i class="fas fa-times mx-1"></i>
+                                                    <p>'.number_format($row_cart['product_price']).'đ</p>
+                                                </div>
+                                                
+                                            </div>
+                                            <a href="delete_cart.php?id='.$row_cart['id_product'].'"><i style="font-size:24px; margin-top: 12px;" class="fas fa-trash-alt"></i></a>
+                                        </div>';
+                                        }
+                                        echo '</div>
+                                       <div class="d-flex justify-content-around mt-4">
+                                        <button type="submit" name="update_click1" class="btn btn-outline-primary btn-primary">Cập nhật<table></table></button>
+                                        <a href="giohang.php" class="btn btn-dark text-white">Xem chi tiết giỏ hàng</a></div>
+                                    </div>';
+                                    }
+                                }else{
+                                    echo '<div class="cart_list mt-5">
+                                    <p class="text-center mb-4">Hiện tại chưa có sản phẩm nào trong giỏ hàng</p>
+                                    <label for="nav_input" style="position: relative;" class="btn d-block w-50 mx-auto btn-ellipse">TIẾP TỤC MUA HÀNG</label>
+                                </div>';
+                                }
+                                echo'
+                                    
+                                </form>';
+                            ?>
                         </div>
-                        <div class="cart_footer p-3">
+                        <div class="cart_footer p-3 ">
 
                             <div class="row">
                                 <div class="col-xs-6 col-6 col-sm-6 col-md-6 col-lg-6">

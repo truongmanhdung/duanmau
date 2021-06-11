@@ -22,10 +22,9 @@ if (isset($_GET['id'])) {
       $view_up = $conn->query($updateview);
     }
   }
-  
 }
 ?>
-<link rel="stylesheet" href="../../public/css/sanpham.css" />
+<link rel="stylesheet" href="../../public/css/sanpham.css?v=<?php echo time(); ?>" />
 <main>
   <div class="overlay d-none"></div>
   <div class="container-fluid">
@@ -64,19 +63,19 @@ if (isset($_GET['id'])) {
             <p>Chương trình kéo dài từ 19/5 - 23/5</p>
           </div>
         </div>
-        <input type="checkbox" hidden class="check_nhan" id="check_check" />
-
         <div class="">
-          <label for="check_check" class="
-                  btn btn-dark
-                  text-white text-center
-                  w-100
-                  fw-bold
-                  my-4
-                  pt-4
-                " style="height: 70px">
-            CHỌN VÒNG TAY VÀ THANH TOÁN
-          </label>
+          <?php 
+            echo '<form action="giohang.php?action=add" method="POST" class="mt-3">
+            <div class="form-groud d-flex mb-2 align-items-center">
+              <span style="display: block; width: 100px;" class="label label-success">Số lượng</span>
+              <input style="width: 100px;" value="1" class="form-control" type="number" name="quantity['.$id.']" size="2" id="">
+            </div>
+            <div class="d-flex justify-content-between mb-4">
+              <button type="submit" class="btn btn-dark text-white">Thêm vào giỏ hàng</button>
+              <a class="btn btn-dark text-white" href="javascript:history.go(-1)">Trở về</a>
+            </div>
+          </form>';
+          ?>
         </div>
         <div class="">
           <span class="fs-6"><i class="fas fa-truck-monster me-1"></i>MIỄN PHÍ VẬN
@@ -127,7 +126,7 @@ if (isset($_GET['id'])) {
                       <p class="color-red">+' . number_format($row1['product_price']) . 'đ</p>
                       <p>' . $row1['name_product'] . '</p>
                       <a
-                        href="sanpham.php?id='.$id.'&pkn=' . $row1['id_product'] . '"
+                        href="sanpham.php?id=' . $id . '&pkn=' . $row1['id_product'] . '"
                         class="
                           btn btn-dark
                           text-white
@@ -161,7 +160,7 @@ if (isset($_GET['id'])) {
                       <p class="color-red">+' . number_format($row_nu['product_price']) . 'đ</p>
                       <p>' . $row_nu['name_product'] . '</p>
                       <a
-                        href="sanpham.php?id='.$id.'&pknu=' . $row_nu['id_product'] . '"
+                        href="sanpham.php?id=' . $id . '&pknu=' . $row_nu['id_product'] . '"
                         class="
                           btn btn-dark
                           text-white
@@ -525,7 +524,7 @@ if (isset($_GET['id'])) {
           $admin_rep = $row8['admin_rep'];
           $sql_user = "SELECT * FROM `users` WHERE `id_user` = '$id_user8'";
           $img_user = $conn->query($sql_user);
-          if($img_user->num_rows > 0){
+          if ($img_user->num_rows > 0) {
             while ($row_img = $img_user->fetch_assoc()) {
               $user_img = $row_img['image'];
               $user_admin = $row_img['admin'];
@@ -533,30 +532,30 @@ if (isset($_GET['id'])) {
           }
           echo '<div class="comment_item d-flex container ps-4">
             <div class="comment_left me-2">
-              <img class="mt-1" height="60px" width="60px" src="../php/admin/light-bootstrap-dashboard-master/examples/images/user/'.$user_img.'" alt="">
+              <img class="mt-1" height="60px" width="60px" src="../php/admin/light-bootstrap-dashboard-master/examples/images/user/' . $user_img . '" alt="">
             </div>
             <div class="comment_right">';
-              if($user_admin==1){
-                echo '<h5>Admin</h5>';
-              }else{
-                echo '<h5>' . $row8['username'] . '</h5>';
-              }
-              
-              echo'
+          if ($user_admin == 1) {
+            echo '<h5>Admin</h5>';
+          } else {
+            echo '<h5>' . $row8['username'] . '</h5>';
+          }
+
+          echo '
               <p class="d-block w-100">' . $row8['content'] . '</p>';
-              if(isset($_COOKIE['user'])){
-                echo '<p class="d-flex align-items-center"><label style="cursor: pointer;color: blue;" for="' . md5($row8['id']) . '">Trả lời</label><i style="font-size: 10px;" class="fas mx-2 fa-circle"></i>' . $row8['time'] . '
+          if (isset($_COOKIE['user'])) {
+            echo '<p class="d-flex align-items-center"><label style="cursor: pointer;color: blue;" for="' . md5($row8['id']) . '">Trả lời</label><i style="font-size: 10px;" class="fas mx-2 fa-circle"></i>' . $row8['time'] . '
                 ';
-              }
-              
-                if(isset($_COOKIE['user'])){
-                  if($id_user8==$id_user || $admin==1){
-                    echo '
-                      <a class="ms-2"  href="sanpham.php?id='.$id.'&comment='.$id_comment.'" onclick="return confirm(\'Bạn có muốn xóa bình luận này không ?\')">Xóa bình luận</a>
+          }
+
+          if (isset($_COOKIE['user'])) {
+            if ($id_user8 == $id_user || $admin == 1) {
+              echo '
+                      <a class="ms-2"  href="sanpham.php?id=' . $id . '&comment=' . $id_comment . '" onclick="return confirm(\'Bạn có muốn xóa bình luận này không ?\')">Xóa bình luận</a>
                     ';
-                  }
-                }
-              echo '</p>
+            }
+          }
+          echo '</p>
               <input type="checkbox" hidden name="rep_comment" class="check_rep" id="' . md5($row8['id']) . '">
               <div class="rep mt-2">
                 <form action="" method="post">
@@ -575,7 +574,7 @@ if (isset($_GET['id'])) {
               $id_user10 = $row10['id_user'];
               $sql_user = "SELECT * FROM `users` WHERE `id_user` = '$id_user10'";
               $img_user = $conn->query($sql_user);
-              if($img_user->num_rows > 0){
+              if ($img_user->num_rows > 0) {
                 while ($row_img = $img_user->fetch_assoc()) {
                   $user_img = $row_img['image'];
                   $user_admin = $row_img['admin'];
@@ -583,25 +582,25 @@ if (isset($_GET['id'])) {
               }
               echo '<div class="comment_item d-flex container" style="padding: 10px 0 10px 85px;">
                   <div class="comment_left me-2">
-                  <img class="mt-1" width="60px" height="60px" src="../php/admin/light-bootstrap-dashboard-master/examples/images/user/'.$user_img.'" alt="">
+                  <img class="mt-1" width="60px" height="60px" src="../php/admin/light-bootstrap-dashboard-master/examples/images/user/' . $user_img . '" alt="">
                   </div>
                   <div class="comment_right">';
-                  if($user_admin==1){
-                    echo '<h5>Admin</h5>';
-                  }else{
-                    echo '<h5>' . $row10['user_name'] . '</h5>';
-                  }
-                    echo '<p class="d-block w-100">' . $row10['comment'] . '</p>
+              if ($user_admin == 1) {
+                echo '<h5>Admin</h5>';
+              } else {
+                echo '<h5>' . $row10['user_name'] . '</h5>';
+              }
+              echo '<p class="d-block w-100">' . $row10['comment'] . '</p>
                     <p class="d-flex align-items-center">Đã trả lời ' . $row8['username'] . '<i style="font-size: 10px;" class="fas mx-2 fa-circle"></i>' . $row10['time'] . '
                     ';
-                    if(isset($_COOKIE['user'])){
-                      if($id_user10==$id_user || $admin==1){
-                        echo '
-                          <a class="ms-2"  href="sanpham.php?id='.$id.'&repcomment='.$id_rep.'" onclick="return confirm(\'Bạn có muốn xóa bình luận này không ?\')">Xóa bình luận</a>
+              if (isset($_COOKIE['user'])) {
+                if ($id_user10 == $id_user || $admin == 1) {
+                  echo '
+                          <a class="ms-2"  href="sanpham.php?id=' . $id . '&repcomment=' . $id_rep . '" onclick="return confirm(\'Bạn có muốn xóa bình luận này không ?\')">Xóa bình luận</a>
                         ';
-                      }
-                    }
-                    echo'</p>
+                }
+              }
+              echo '</p>
                   </div>
                 </div>';
             }
@@ -611,32 +610,32 @@ if (isset($_GET['id'])) {
             $sql7 = "INSERT INTO `repcomment`( `id_comment`, `id_user`, `comment`, `time`, `user_name`) VALUES ('$id_comment','$id_user','$rep_comment_sp','$today','$user_name_comment')";
             $result7 = $conn->query($sql7);
             if ($result7) {
-              header('Location: sanpham.php?id='.$id.'');
+              header('Location: sanpham.php?id=' . $id . '');
             }
           }
         }
       }
       ?>
-      <?php 
-        if(isset($_GET['comment'])){
+      <?php
+      if (isset($_GET['comment'])) {
 
-          $id_comment = $_GET['comment'];
-          $id = $_GET['id'];
-          $sql = "DELETE FROM `comment` WHERE `id`='$id_comment'";
-          $result = $conn->query($sql);
-          if($result){
-            header('Location: sanpham.php?id='.$id.'');
-          }
+        $id_comment = $_GET['comment'];
+        $id = $_GET['id'];
+        $sql = "DELETE FROM `comment` WHERE `id`='$id_comment'";
+        $result = $conn->query($sql);
+        if ($result) {
+          header('Location: sanpham.php?id=' . $id . '');
         }
-        if(isset($_GET['repcomment'])){
-          $id = $_GET['id'];
-          $id_repcomment = $_GET['repcomment'];
-          $sql = "DELETE FROM `repcomment` WHERE `id`='$id_repcomment'";
-          $result = $conn->query($sql);
-          if($result){
-            header('Location: sanpham.php?id='.$id.'');
-          }
+      }
+      if (isset($_GET['repcomment'])) {
+        $id = $_GET['id'];
+        $id_repcomment = $_GET['repcomment'];
+        $sql = "DELETE FROM `repcomment` WHERE `id`='$id_repcomment'";
+        $result = $conn->query($sql);
+        if ($result) {
+          header('Location: sanpham.php?id=' . $id . '');
         }
+      }
       ?>
     </div>
   </div>
