@@ -1,5 +1,4 @@
-<div class="container-fluid">
-    <div class="row">
+        <div class="row">
         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine">
             <img width="100%" src="../../src/php/admin/light-bootstrap-dashboard-master/examples/images/footer/1.jpg" alt="">
         </div>
@@ -57,10 +56,28 @@
     <div class="footer_end">
 
         <div class="row container">
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <p class="mb-3">© 2019 - Bản quyền của CTCP PHÁT TRIỂN SẢN PHẨM SÁNG TẠO VIỆT</p>
-                <p>Giấy chứng nhận ĐKKD số 0108150321 do Sở Kế hoạch và Đầu tư Thành phố Hà Nội cấp ngày 29/01/2018 123C Thụy Khuê, Tây Hồ, Hà Nội</p>
-            </div>
+        <?php 
+            $sql = "SELECT * FROM `setting`";
+            $result = $conn->query($sql);
+            if($result->num_rows > 0){
+                while($row = $result->fetch_assoc()){
+                    echo '
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <p class="mb-3">'.$row['address'].'</p>
+                        <p>'.$row['note'].'</p>
+                    </div>
+                    ';
+                }
+            }else{
+                echo '
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <p class="mb-3">© 2019 - Bản quyền của CTCP PHÁT TRIỂN SẢN PHẨM SÁNG TẠO VIỆT</p>
+                        <p>Giấy chứng nhận ĐKKD số 0108150321 do Sở Kế hoạch và Đầu tư Thành phố Hà Nội cấp ngày 29/01/2018 123C Thụy Khuê, Tây Hồ, Hà Nội</p>
+                    </div>
+                    ';
+            }
+        ?>
+            
 
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 row align-items-center">
 
@@ -90,6 +107,7 @@
 <!-- Option 1: Bootstrap Bundle with Popper -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-beta1/js/bootstrap.bundle.min.js"></script>
 <script src="../js/video.js"></script>
+<script src="../js/ajax.js"></script>
 <script src="../js/app.js"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <!-- Option 2: Separate Popper and Bootstrap JS -->

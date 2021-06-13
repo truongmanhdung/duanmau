@@ -71,10 +71,6 @@ if (isset($_GET['id'])) {
         <div class="mb-3 mt-3">
         </div>
 
-        <div class="form-group mb-3 mt-3">
-          <input type="search" class="form-control" placeholder="Tìm kiếm">
-        </div>
-
       </div>
     </div>
   </div>
@@ -108,11 +104,6 @@ if (isset($_GET['id'])) {
             </select>
           </form>
         </div>
-
-        <div class="form-group mb-3 mt-3">
-          <input type="search" class="form-control" placeholder="Tìm kiếm">
-        </div>
-
       </div>
     </div>
   </div>

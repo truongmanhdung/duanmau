@@ -27,8 +27,9 @@
     <title>Thương hiệu đồng hồ Curnonwatch</title>
 </head>
 
-<body class="container-fluid">
-    <nav class="container-fluid">
+<body>
+<div class="container-fluid">
+    <nav>
         <div class="d-flex justify-content-between p-2 align-items-center">
             <ul class="mb-2 mb-lg-0 d-flex">
                 <li class="nav-item test1">
@@ -284,9 +285,31 @@
                     </div>
                 </li>
             </ul>
-            <div class="logo">
-                <a href="index.php"><img src="../../src/php/admin/light-bootstrap-dashboard-master/examples/images/logo-mWb.svg" alt=""></a>
-            </div>
+            <?php 
+                $sql_setting_menu = "SELECT * FROM `setting`";
+                $result_setting_menu = $conn->query($sql_setting_menu);
+                if($result_setting_menu->num_rows > 0){
+                    while ($row_setting_menu = $result_setting_menu->fetch_assoc()){
+                        $logo = $row_setting_menu['logo'];
+                        echo '
+                        <div class="logo">
+                            <a href="index.php">
+                                <img src="../../src/php/admin/light-bootstrap-dashboard-master/examples/images/setting/'.$logo.'" alt="">
+                            </a>
+                        </div>
+                        ';
+                    }
+                }else{
+                    echo '
+                        <div class="logo">
+                            <a href="index.php">
+                                <img src="../../src/php/admin/light-bootstrap-dashboard-master/examples/images/logo-mWb.svg" alt="">
+                            </a>
+                        </div>
+                        ';
+                }
+            ?>
+            
             <ul class="mb-2 mb-lg-0 d-flex">
                 <li class="nav-item login_hover">
                     <a class="nav-link" href="">TÀI KHOẢN</a>
@@ -426,12 +449,13 @@
                             </div>
                         </div>
                         <div class="cart_body">
-                            <div class="cart_list mt-5 d-flex align-items-center bg-light p-4 ps-5">
-                                <label for="search" class="fas fa-search d-block me-2"></label>
-                                <form action="" method="get">
-                                    <input type="search" name="search" id="search">
-                                </form>
+                            
+                            <div class="frmSearch p-4">
+                                <?php 
+                                    include 'search.php';
+                                ?>
                             </div>
+                        
                         </div>
                     </div>
                 </li>

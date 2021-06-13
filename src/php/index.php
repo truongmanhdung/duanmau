@@ -4,22 +4,46 @@
     ?>
     <main>
       <div class="container-fluid">
-        <div class="banner">
-          <div class="row container">
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 header_banner" data-aos="zoom-in-right" data-aos-duration="2000">
-              <h5 class="mt-5">SUMMER SALE</h5>
-              <h3>MUA 1 ĐỒNG HỒ TẶNG 1 VÒNG TAY</h3>
-              <p class="mt-5; mb-5">Chương trình kéo dài từ 19/5 - 23/5</p>
-              <a href="thuonghieu.php " class="btn btn-outline-primary btn_view mb-4"
-                >MUA ĐỒNG HỒ NGAY</a
-              >
-            </div>
-
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" data-aos="zoom-in-left" data-aos-duration="2000">
-              <img src="../php/admin/light-bootstrap-dashboard-master/examples/images/banner.png" alt="" class="p-5" />
-            </div>
-          </div>
-        </div>
+        <?php 
+          $sql = "SELECT * FROM `setting`";
+          $result = $conn->query($sql);
+          if($result->num_rows > 0){
+            while($row = $result->fetch_assoc()){
+              echo '<div class="banner" style="background-image: url(../php/admin/light-bootstrap-dashboard-master/examples/images/setting/'.$row['image_banner'] .')">
+                      <div class="row container">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 header_banner" data-aos="zoom-in-right" data-aos-duration="2000">
+                          <h5 class="mt-5">'.$row['h5_banner'].'</h5>
+                          <h3>'.$row['h3_banner'].'</h3>
+                          <p class="mt-5; mb-5">'.$row['slogan'].'</p>
+                          <a href="thuonghieu.php " class="btn btn-outline-primary btn_view mb-4"
+                            >MUA ĐỒNG HỒ NGAY</a
+                          >
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" data-aos="zoom-in-left" data-aos-duration="2000">
+                          <img src="../php/admin/light-bootstrap-dashboard-master/examples/images/setting/banner.png" alt="" class="p-5" />
+                        </div>
+                      </div>
+                    </div>';
+            }
+          }else{
+            echo '<div class="banner" style="background-image: url(../php/admin/light-bootstrap-dashboard-master/examples/images/setting/background-banner.jpg)">
+                      <div class="row container">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 header_banner" data-aos="zoom-in-right" data-aos-duration="2000">
+                          <h5 class="mt-5">SUMMER SALE</h5>
+                          <h3>MUA 1 ĐỒNG HỒ TẶNG 1 VÒNG TAY</h3>
+                          <p class="mt-5; mb-5">Chương trình kéo dài từ 19/5 - 23/5</p>
+                          <a href="thuonghieu.php " class="btn btn-outline-primary btn_view mb-4"
+                            >MUA ĐỒNG HỒ NGAY</a
+                          >
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" data-aos="zoom-in-left" data-aos-duration="2000">
+                          <img src="../php/admin/light-bootstrap-dashboard-master/examples/images/setting/banner.png" alt="" class="p-5" />
+                        </div>
+                      </div>
+                    </div>';
+          }
+        ?>
+        
         <!-- end banner -->
         <div class="category mt-3" data-aos="fade-up"
      data-aos-anchor-placement="top-center" data-aos-duration="2000">

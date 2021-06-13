@@ -8,7 +8,8 @@
 
    }
    .container-fluid{
-     max-width: 1348px;
+    padding: 0px;
+    overflow: hidden;
    }
    .container{
      margin: 0 auto !important;
@@ -617,7 +618,7 @@
   color: white;
   }
   .banner{
-    background-image: url("https://img4.thuthuatphanmem.vn/uploads/2020/12/25/background-banner-blue_060827813.jpg");
+    
   }
   .btn_view{
     position: relative;
@@ -1038,4 +1039,7 @@ td{
   color: white;
   border-radius: 50%;
   font-size: 12px;
+}
+.product_search{
+  
 }
